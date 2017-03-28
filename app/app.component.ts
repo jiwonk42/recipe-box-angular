@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
    <div class="container">
      <h1>Recipe Box</h1>
      <ul>
-      <li [class]="priorityColor(currentRecipe)" (click)="isCooked(currentRecipe)" *ngFor="let currentRecipe of recipes">{{currentRecipe.name}} - {{currentRecipe.ingredient}} <button (click)="editRecipe()">Edit</button></li>
+      <li [class]="priorityColor(currentRecipe)" (click)="editRecipe(currentRecipe)" *ngFor="let currentRecipe of recipes">{{currentRecipe.name}} - {{currentRecipe.ingredient}} <button (click)="editRecipe(currentRecipe)">Edit</button></li>
     </ul>
     <hr>
     <div>
@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
      <p>Recipe Complete? {{selectedRecipe.cooked}}</p>
     <h3>Edit Recipe</h3>
     <label>Enter Recipe Ingredients:</label>
-    <input [(ngModel)]="selectedRecipe.ingredients">
+    <input [(ngModel)]="selectedRecipe.ingredient">
      <label>Enter Recipe Priority (1-3):</label>
      <br>
      <input type="radio" [(ngModel)]="selectedRecipe.priority" [value]="1">1 (Low Priority)<br>
@@ -30,10 +30,11 @@ export class AppComponent {
     new Recipe('Pizza', 'dough, cheese, sauce', 3),
     new Recipe('Nachos', 'cheese, chips', 2)
   ];
+
   selectedRecipe: Recipe = this.recipes[0];
 
-  editRecipe() {
-    alert("Edit me please");
+  editRecipe(clickedRecipe) {
+    this.selectedRecipe = clickedRecipe;
   }
 
   isCooked(clickedRecipe: Recipe) {
